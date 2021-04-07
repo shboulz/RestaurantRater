@@ -1,6 +1,7 @@
 ﻿using RestaurantRater.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -15,7 +16,7 @@ namespace RestaurantRater.Controllers
         // Create new ratings
         // POST api/Rating
         [HttpPost]
-        public async Task<IHttpActionResult> CreateRating([FromBody]Rating model)
+        public async Task<IHttpActionResult> CreateRating([FromBody] Rating model)
         {
             //Check if model is null
             if (model is null)
@@ -44,13 +45,84 @@ namespace RestaurantRater.Controllers
             return InternalServerError();
         }
         // Get a rating by its ID
+        [HttpGet]
+        public async Task<IHttpActionResult> GetByRatingId([FromUri] int id)
+        {
+            Rating rating = await _context.Ratings.FindAsync(id);
 
-        // Get ALl Ratings
+            if (rating != null)
+            {
+                return Ok(rating);
+            }
+
+            return NotFound();
+        }
+
+
+        // Get All Ratings
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAllRatings()
+        {
+            List<Rating> rating = await _context.Ratings.ToListAsync();
+            return Ok(rating);
+        }
 
         // Get All Ratings for a specific restaurant by the Restaurant ID
 
+
         //Update a Rating
+        [HttpPut]
+        public async Task<IHttpActionResult> UpdateRating([FromUri] int id, [FromBody] Rating updatedRating)
+        {
+            
+            if (id != updatedRating?.Id)
+            {
+                return BadRequest("Ids do not match.");
+            }
+            
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            
+            Rating rating = await _context.Ratings.FindAsync(id);
+            
+            if (rating is null)
+                return NotFound();
+
+
+            
+            rating.FoodScore = updatedRating.FoodScore;
+            rating.CleanlinessScore = updatedRating.CleanlinessScore;
+            rating.EnvironmentScore = updatedRating.EnvironmentScore;
+
+
+
+            
+            await _context.SaveChangesAsync();
+            return Ok("The restaurant was updated!");
+
+
+        }
 
         // Delete a Rating
+        [HttpDelete]
+        public async Task<IHttpActionResult> DeleteRating([FromUri] int id)
+        {
+            Rating rating = await _context.Ratings.FindAsync(id);
+
+            if (rating is null)
+            {
+                return NotFound();
+
+            }
+            _context.Ratings.Remove(rating);
+
+            if (await _context.SaveChangesAsync() == 1)
+            {
+                return Ok("The rating was deleted");
+            }
+
+            return InternalServerError();
+        }
     }
 }

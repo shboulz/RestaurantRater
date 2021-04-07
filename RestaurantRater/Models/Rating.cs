@@ -32,6 +32,7 @@ namespace RestaurantRater.Models
         [Required, Range(0, 10)]
         public double EnvironmentScore { get; set; }
 
+
         public double AverageRating 
         {
             get

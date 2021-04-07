@@ -169,13 +169,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202104061402416_InitialMigration.cs" />
-    <Compile Include="Migrations\202104061402416_InitialMigration.designer.cs">
-      <DependentUpon>202104061402416_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104061548128_AddedRatings.cs" />
-    <Compile Include="Migrations\202104061548128_AddedRatings.designer.cs">
-      <DependentUpon>202104061548128_AddedRatings.cs</DependentUpon>
+    <Compile Include="Migrations\202104062117401_InitialMigration.cs" />
+    <Compile Include="Migrations\202104062117401_InitialMigration.designer.cs">
+      <DependentUpon>202104062117401_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Rating.cs" />
@@ -267,11 +263,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202104061402416_InitialMigration.resx">
-      <DependentUpon>202104061402416_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104061548128_AddedRatings.resx">
-      <DependentUpon>202104061548128_AddedRatings.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202104062117401_InitialMigration.resx">
+      <DependentUpon>202104062117401_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

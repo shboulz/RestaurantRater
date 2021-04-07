@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddedRatings : DbMigration
+    public partial class InitialMigration : DbMigration
     {
         public override void Up()
         {
@@ -21,14 +21,23 @@
                 .ForeignKey("dbo.Restaurants", t => t.RestaurantId, cascadeDelete: true)
                 .Index(t => t.RestaurantId);
             
-            DropColumn("dbo.Restaurants", "Rating");
+            CreateTable(
+                "dbo.Restaurants",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false),
+                        Address = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
         }
         
         public override void Down()
         {
-            AddColumn("dbo.Restaurants", "Rating", c => c.Double(nullable: false));
             DropForeignKey("dbo.Ratings", "RestaurantId", "dbo.Restaurants");
             DropIndex("dbo.Ratings", new[] { "RestaurantId" });
+            DropTable("dbo.Restaurants");
             DropTable("dbo.Ratings");
         }
     }

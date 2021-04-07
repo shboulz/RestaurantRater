@@ -13,7 +13,7 @@ namespace RestaurantRater.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202104061402416_InitialMigration"; }
+            get { return "202104062117401_InitialMigration"; }
         }
         
         string IMigrationMetadata.Source
